@@ -1,0 +1,12 @@
+{
+    "type":"mysql",
+    "host":"180.76.235.184",
+    "port":"3306",
+    "username":"cheercare",
+    "password":"zkqk666888",
+    "database":"websocket_test",
+    "entities":["src/entities/**{.ts,.js}"],
+    "synchronize":false,
+    "logger":"advanced-console",
+    "logging":true
+}
