@@ -8,7 +8,7 @@ const { Token, Priviledges } = AccessToken;
 export class AgoraService {
 
     genChannelNo() {
-        return StrUtil.genRandomStr();
+        return StrUtil.genRandomStr('ag_channel');
     }
 
 

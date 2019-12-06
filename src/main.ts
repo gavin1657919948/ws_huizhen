@@ -1,6 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+process.env.NGINX_VIDEO_DIR = '/root/video_upload';
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();

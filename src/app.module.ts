@@ -6,6 +6,7 @@ import { AppController } from './app.controller';
 import { AgoraService, UsersService } from './services';
 import { BoardRecordGateWay } from './ws/ws.gateway';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { RecordGateWay } from './ws/record.gateway';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   ],
   controllers: [AppController],
   providers: [AgoraService, UsersService,
-    BoardRecordGateWay,
+    BoardRecordGateWay, RecordGateWay,
   ],
 })
 export class AppModule { }

@@ -2,6 +2,9 @@ import { WebSocketGateway, WebSocketServer, SubscribeMessage, OnGatewayConnectio
 import { Socket } from 'socket.io';
 import { EntityManager } from 'typeorm';
 import { BoardRecord } from '../entities/board_record';
+import * as fs from 'fs';
+import * as path from 'path';
+const save = require('save-file');
 
 @WebSocketGateway(5000, { namespace: 'board' })
 export class BoardRecordGateWay implements OnGatewayConnection, OnGatewayDisconnect {
@@ -33,6 +36,26 @@ export class BoardRecordGateWay implements OnGatewayConnection, OnGatewayDisconn
     async drawing(sender: Socket, data) {
         const userId = sender.handshake.query.userId;
         console.log("socket drawing:", data);
+    }
+    @SubscribeMessage('chunk')
+    async receiveBuffer(sender: Socket, data) {
+        // console.log("data:", typeof data, data.toString());
+        // console.log(sender)
+        const chunk = data.buf;
+        const userId = data.userId;
+
+        console.log("data...................uid:", userId)
+        console.log("data...................:", typeof chunk, chunk)
+        //console.log("buf:", Buffer.from(data), typeof Buffer.from(data))
+        try {
+            fs.appendFileSync(path.join(__dirname, '/test.webm'), chunk, { encoding: "binary" })
+            console.log("success")
+        } catch (error) {
+            console.error(error)
+        }
+
+        // await save(chunk, 'test.webm');
+
     }
 
 }

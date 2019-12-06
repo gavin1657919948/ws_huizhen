@@ -6,7 +6,7 @@ import { Patient } from '../entities/patient';
 import { Doctor } from '../entities/doctor';
 import { Room } from '../entities/room';
 import { AgoraService } from './agora.service';
-
+import * as TimeOut from 'smart-timeout';
 import { Redis } from 'ioredis';
 import { InjectRedisClient } from 'nestjs-ioredis';
 
@@ -25,6 +25,17 @@ export class UsersService {
     async findAllDoctors() {
         return this.em.find(Doctor);
     }
+    // 呼叫患者
+    async notify() {
+        const timerId = StrUtil.genRandomStr('timer');
+        TimeOut.set(timerId, () => { console.log("未响应业务") }, 10000)
+        return { timerId };
+    }
+    // 患者响应呼叫，销毁倒计时器
+    async destoryTimer(timerId: string) {
+        TimeOut.clear(timerId);
+    }
+
     async doctorQuitChannel(doctorId: number) {
         const doctorRoom = await this.em.findOne(Room, { where: { doctorId, status: 1 } });
         doctorRoom.status = 2;
